@@ -1,8 +1,8 @@
 # Satisfaction
 
-<!-- [![Build Status](https://travis-ci.org/danyshaanan/satisfaction.png?branch=master)](https://travis-ci.org/danyshaanan/satisfaction) -->
-
 ### Verifies that a `node_modules` dir satisfies a `package.json` file.
+
+[![Build Status](https://travis-ci.org/danyshaanan/satisfaction.png?branch=master)](https://travis-ci.org/danyshaanan/satisfaction)
 
 * * *
 ### Installation
