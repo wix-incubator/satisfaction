@@ -1,0 +1,11 @@
+{
+  "name": "satisfaction",
+  "version": "1.0.0",
+  "dependencies": {
+    "semver": {
+      "version": "3.0.1",
+      "from": "semver@^3.0.1",
+      "resolved": "https://registry.npmjs.org/semver/-/semver-3.0.1.tgz"
+    }
+  }
+}
