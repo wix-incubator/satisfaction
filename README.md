@@ -58,7 +58,7 @@ console.log(satisfaction.status(options))
 * * *
 ### Notes / Caveats
 * Current NPM versions satisfy `^0.x.y` with `>0.x.y`, but anything that starts with 0 is [considered by node-semver to make no stability guarantees](https://www.npmjs.org/doc/misc/semver.html) and therefore `0.1.1` does not satisfy `^0.1.0`. This [will be fixed in npm v2](https://github.com/npm/npm/issues/5695), but for the meanwhile, for Satisfaction to work, opt for using `0.x.y` rather than `^0.x.y`.
-* When using git urls in dependencies, like `"byRepo": "git+ssh://git@example.com:repo.git#3.5.3"`, it must be done with a tag that corresponds to the version of said package, or it will be considered a violation.
+* When using git urls in dependencies, (like `"byRepo": "git+ssh://git@example.com:repo.git#3.5.3"`), it must be done with a tag (`3.5.3` or `v3.5.3`) that corresponds to the version of said package (`3.5.3`), or it will be considered a violation.
 * Checks the `"dependencies"` and `"devDependencies"` fields of `package.json`.
 * Does not verify that you don't have node_modules that are not in package.json.
 
