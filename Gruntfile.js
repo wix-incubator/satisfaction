@@ -4,22 +4,15 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-    jshint: {
-      src: {
-        src: ['main.js', 'test/**/*.js'],
-        options: {
-          node: true,
-          asi: true,
-          unused: 'vars',
-          globalstrict: true,
-          eqeqeq: true,
-          forin: true,
-          latedef: true,
-          quotmark: 'single',
-          undef: true,
-          trailing: true,
-          lastsemic: true
-        }
+    eslint: {
+      target: ['main.js', 'test/**/*.js'],
+    },
+    bump: {
+      options: {
+        files: ['package.json', 'npm-shrinkwrap.json'],
+        commitFiles: ['package.json', 'npm-shrinkwrap.json'],
+        tagName: '%VERSION%',
+        push: false
       }
     },
     tape: {
@@ -27,8 +20,9 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-tape');
+  grunt.loadNpmTasks('grunt-eslint')
+  grunt.loadNpmTasks('grunt-bump')
+  grunt.loadNpmTasks('grunt-tape')
 
-  grunt.registerTask('default', ['jshint', 'tape']);
+  grunt.registerTask('default', ['eslint', 'tape'])
 };
