@@ -6,8 +6,6 @@
 
 ### Verifies that a `package.json` file is satisfied by its `node_modules` dir.
 
-[![Build Status](https://travis-ci.org/danyshaanan/satisfaction.png?branch=master)](https://travis-ci.org/danyshaanan/satisfaction)
-
 Satisfaction uses
 [the Semver package](https://github.com/npm/node-semver)
 (that is used by NPM) to verify that the version listed in `node_modules/a/package.json`
