@@ -33,7 +33,7 @@
   },
   "main": "main.js",
   "scripts": {
-    "test": "faucet"
+    "test": "grunt"
   },
   "dependencies": {
     "semver": "^3.0.1"
