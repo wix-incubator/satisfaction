@@ -1,5 +1,9 @@
 # Satisfaction
 
+[![Build Status](https://travis-ci.org/danyshaanan/satisfaction.png)](https://travis-ci.org/danyshaanan/satisfaction)
+[![NPM Version](https://img.shields.io/npm/v/satisfaction.svg?style=flat)](https://npmjs.org/package/satisfaction)
+[![License](http://img.shields.io/npm/l/satisfaction.svg?style=flat)](LICENSE)
+
 ### Verifies that a `package.json` file is satisfied by its `node_modules` dir.
 
 [![Build Status](https://travis-ci.org/danyshaanan/satisfaction.png?branch=master)](https://travis-ci.org/danyshaanan/satisfaction)
