@@ -20,9 +20,9 @@ function mixin(target, source) {
   return target
 }
 
-function getJson(path) {
+function getJson(jsonPath) {
   try {
-    return require(path)
+    return require(jsonPath)
   } catch(e) {
     return null
   }
@@ -31,24 +31,28 @@ function getJson(path) {
 function violations(options) {
   var optionsKey = JSON.stringify(options)
 
-  if (violations.list && violations.list[optionsKey]) return violations.list[optionsKey]
+  if (violations.list && violations.list[optionsKey]) {
+    return violations.list[optionsKey]
+  }
 
   options = mixin(options || {}, DEFAULTS)
   var packageJsonPath = path.join(options.dir, options.packageJsonName)
   var nodeModulesPath = path.join(options.dir, options.nodeModulesName)
 
   function log() {
-    if (options.verbose) console.log.apply(console, Array.prototype.slice.apply(arguments))
+    if (options.verbose) {
+      console.log.apply(console, Array.prototype.slice.apply(arguments))
+    }
   }
 
   function getInstalledPackageVersion(pkg) {
-    var packageJson = getJson(path.join(nodeModulesPath, pkg, options.packageJsonName))
-    return packageJson && packageJson.version
+    var pkgJson = getJson(path.join(nodeModulesPath, pkg, options.packageJsonName))
+    return pkgJson && pkgJson.version
   }
 
   function getViolationsInDependenciesObject(obj) {
     return Object.keys(obj).map(function(dep) {
-      var neededVersion = obj[dep].replace(/^.*\:\/\/.*#/,'') //gets the tag if using non-npm git repo
+      var neededVersion = obj[dep].replace(/^.*\:\/\/.*#/, '') //gets the tag if using non-npm git repo
       var currentVersion = getInstalledPackageVersion(dep)
 
       log(dep + ' requires ' + neededVersion + ', has ' + currentVersion)
@@ -62,7 +66,9 @@ function violations(options) {
   }
 
   var packageJson = getJson(packageJsonPath)
-  if (!packageJson) throw new Error('package.json is not at ' + packageJsonPath + ' (or invalid json)')
+  if (!packageJson) {
+    throw new Error('package.json is not at ' + packageJsonPath + ' (or invalid json)')
+  }
 
   var dependenciesObjects = [packageJson.dependencies, packageJson.devDependencies]
 
