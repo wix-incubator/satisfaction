@@ -1,11 +1,11 @@
-'use strict';
+'use strict'
 
 module.exports = function(grunt) {
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     eslint: {
-      target: ['main.js', 'test/**/*.js'],
+      target: ['**/*.js', '!node_modules/**/*']
     },
     bump: {
       options: {
@@ -18,11 +18,11 @@ module.exports = function(grunt) {
     tape: {
       files: ['test/**/*.js']
     }
-  });
+  })
 
   grunt.loadNpmTasks('grunt-eslint')
   grunt.loadNpmTasks('grunt-bump')
   grunt.loadNpmTasks('grunt-tape')
 
   grunt.registerTask('default', ['eslint', 'tape'])
-};
+}

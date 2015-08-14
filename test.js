@@ -11,7 +11,3 @@ console.log(status)
 if (!status) {
   console.log(satisfaction.violations({verbose: true}))
 }
-
-
-
-//

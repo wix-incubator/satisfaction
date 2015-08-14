@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 var semver = require('semver')
 var path = require('path')
