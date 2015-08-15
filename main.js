@@ -5,8 +5,8 @@ var path = require('path')
 
 var DEFAULTS = {
   dir: process.cwd(),
-  packageJsonName: 'package.json', //for testing
-  nodeModulesName: 'node_modules', //for testing
+  packageJsonName: 'package.json', // for testing
+  nodeModulesName: 'node_modules', // for testing
   verbose: false
 }
 
@@ -52,7 +52,7 @@ function violations(options) {
 
   function getViolationsInDependenciesObject(obj) {
     return Object.keys(obj).map(function(dep) {
-      var neededVersion = obj[dep].replace(/^.*\:\/\/.*#/, '') //gets the tag if using non-npm git repo
+      var neededVersion = obj[dep].replace(/^.*\:\/\/.*#/, '') // gets the tag if using non-npm git repo
       var currentVersion = getInstalledPackageVersion(dep)
 
       log(dep + ' requires ' + neededVersion + ', has ' + currentVersion)
