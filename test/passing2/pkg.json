@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "a": "^3.0.1",
+    "byRepo": "githubuser/githubrepo#3.5.3"
+  },
+  "devDependencies": {
+    "b": "0.0.1"
+  }
+}

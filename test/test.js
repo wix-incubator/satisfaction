@@ -22,6 +22,11 @@ test('passing for dep, devdep, and git url with semver-like tag', function(t) {
   t.equal(statusForDir('passing1'), true)
 })
 
+test('passing for githubuser/githubrepo dep with semver-like tag', function(t) {
+  t.plan(1)
+  t.equal(statusForDir('passing2'), true)
+})
+
 test('failing on wrong version', function(t) {
   t.plan(1)
   t.equal(statusForDir('failing1'), false)
@@ -45,4 +50,9 @@ test('failing on git url with non semver-like tag', function(t) {
 test('failing on missing git url dependency', function(t) {
   t.plan(1)
   t.equal(statusForDir('failing5'), false)
+})
+
+test('failing on missing git url dependency', function(t) {
+  t.plan(1)
+  t.equal(statusForDir('failing6'), false)
 })
