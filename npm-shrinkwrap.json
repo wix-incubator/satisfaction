@@ -1,6 +1,6 @@
 {
   "name": "satisfaction",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "dependencies": {
     "semver": {
       "version": "3.0.1",
