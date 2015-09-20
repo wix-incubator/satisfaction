@@ -3,6 +3,8 @@
 [![Build Status](https://travis-ci.org/danyshaanan/satisfaction.png)](https://travis-ci.org/danyshaanan/satisfaction)
 [![NPM Version](https://img.shields.io/npm/v/satisfaction.svg?style=flat)](https://npmjs.org/package/satisfaction)
 [![License](http://img.shields.io/npm/l/satisfaction.svg?style=flat)](LICENSE)
+[![Dependency Status](https://david-dm.org/danyshaanan/satisfaction.svg)](https://david-dm.org/danyshaanan/satisfaction)
+[![devDependency Status](https://david-dm.org/danyshaanan/satisfaction/dev-status.svg)](https://david-dm.org/danyshaanan/satisfaction#info=devDependencies)
 
 ### Verifies that a `package.json` file is satisfied by its `node_modules` dir.
 
