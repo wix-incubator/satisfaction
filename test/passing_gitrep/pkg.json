@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "a": "git+ssh://git@example.com:repo.git#1.0.0"
+  },
+  "devDependencies": {
+    "b": "githubuser/githubrepo#v1.0.0"
+  }
+}

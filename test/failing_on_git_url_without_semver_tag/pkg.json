@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "a": "git+ssh://git@example.com:repo.git"
+  }
+}

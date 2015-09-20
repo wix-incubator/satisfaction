@@ -1,9 +1,0 @@
-{
-  "dependencies": {
-    "a": "^3.0.1",
-    "byRepo": "git+ssh://git@example.com:repo.git#3.5.3"
-  },
-  "devDependencies": {
-    "b": "0.0.1"
-  }
-}
