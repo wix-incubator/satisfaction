@@ -1,6 +1,7 @@
 {
     "extends": "standard",
     "rules": {
-        "space-before-function-paren": [2, "never"]
+        "space-before-function-paren": [2, "never"],
+        "space-after-keywords": 0
     }
 }
