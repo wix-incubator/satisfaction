@@ -19,7 +19,7 @@ test('this package', function(t) {
 
 test('passing for dep, devdep, and git url with semver-like tag', function(t) {
   t.plan(1)
-  t.equal(statusForDir('passing'), true)
+  t.equal(statusForDir('passing1'), true)
 })
 
 test('failing on wrong version', function(t) {
