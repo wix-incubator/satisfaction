@@ -51,6 +51,7 @@ function violations(options) {
   }
 
   function getViolationsInDependenciesObject(obj) {
+    obj = obj || {}
     return Object.keys(obj).map(function(dep) {
       var neededVersion = obj[dep].replace(/^.*#/, '') // gets the tag if using non-npm git repo
       var currentVersion = getInstalledPackageVersion(dep)
