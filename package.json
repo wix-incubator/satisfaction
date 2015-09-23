@@ -34,8 +34,8 @@
   },
   "main": "main.js",
   "scripts": {
-    "lint": "./node_modules/.bin/eslint main.js test/**/*.js",
-    "tape": "./node_modules/.bin/tape test/**/*.js",
+    "lint": "./node_modules/.bin/eslint main.js 'test/**/*.js'",
+    "tape": "./node_modules/.bin/tape 'test/**/*.js'",
     "test": "npm run lint && npm run tape",
     "start": "npm test"
   },
