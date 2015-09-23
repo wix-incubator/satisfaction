@@ -34,7 +34,10 @@
   },
   "main": "main.js",
   "scripts": {
-    "test": "grunt"
+    "lint": "./node_modules/.bin/eslint main.js test/**/*.js",
+    "tape": "./node_modules/.bin/tape test/**/*.js",
+    "test": "npm run lint && npm run tape",
+    "start": "npm test"
   },
   "dependencies": {
     "semver": "^5.0.3"
@@ -44,10 +47,6 @@
     "eslint-config-standard": "^4.1.0",
     "eslint-plugin-standard": "^1.2.0",
     "faucet": "0.0.1",
-    "grunt": "0.4.5",
-    "grunt-bump": "0.0.16",
-    "grunt-eslint": "^17.1.0",
-    "grunt-tape": "0.0.2",
     "tape": "2.14.0"
   }
 }
