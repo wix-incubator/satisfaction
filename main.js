@@ -23,7 +23,7 @@ function mixin(target, source) {
 function getJson(jsonPath) {
   try {
     return require(jsonPath)
-  } catch(e) {
+  } catch (e) {
     return null
   }
 }
