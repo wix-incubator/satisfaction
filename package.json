@@ -32,6 +32,10 @@
     "url": "https://github.com/danyshaanan/satisfaction",
     "email": "danyshaanan@gmail.com"
   },
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "engine-strict": true,
   "main": "main.js",
   "bin": {
     "satisfaction": "bin.js"
