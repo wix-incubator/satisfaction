@@ -23,6 +23,8 @@ $ npm install satisfaction
 * * *
 ### Usage
 
+### As a dependency
+
 ```js
 var satisfaction = require('satisfaction')
 var status = satisfaction.status() //defaults to current location
@@ -58,6 +60,13 @@ var options = {
 
 console.log(satisfaction.status(options))
 ```
+
+### As a global
+
+The `satisfaction` global binary will throw an error when the current directory's `node_modules` does not satisfy the `package.json`.
+
+Running `satisfaction || npm i` will be prevent `npm i` from running when everything is already installed with compliant versions.
+
 
 * * *
 ### Notes / Caveats
