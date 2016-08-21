@@ -33,6 +33,9 @@
     "email": "danyshaanan@gmail.com"
   },
   "main": "main.js",
+  "bin": {
+    "satisfaction": "bin.js"
+  },
   "scripts": {
     "lint": "eslint .",
     "tape": "./node_modules/.bin/tape 'test/**/*.js'",
