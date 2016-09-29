@@ -10,69 +10,92 @@
 
 Satisfaction uses
 [the Semver package](https://github.com/npm/node-semver)
-(that is used by NPM) to verify that the version listed in `node_modules/a/package.json`
-satisfies the requirement defined in your `package.json`.
+(which is used by NPM) to verify that the versions installed in your `node_modules`
+satisfy the requirement defined in your `package.json`,
+and can also verify that all of your dependencies are required with specific versions,
+(no `~`, `^`, `>=`, etc).
 
 
 * * *
 ### Installation
 ```bash
-$ npm install satisfaction
+$ npm i satisfaction
 ```
+
+or globally:
+```bash
+$ npm i -g satisfaction
+```
+
 
 * * *
 ### Usage
 
-### As a dependency
+#### As a dependency
 
 ```js
-var satisfaction = require('satisfaction')
-var status = satisfaction.status() //defaults to current location
-if (!status) {
-  console.log(satisfaction.violations())
-} else {
-  console.log('everything is fine')
+const satisfaction = require('satisfaction')
+
+const statusErrors = satisfaction.checkStatus()
+if (statusErrors.length) {
+  throw new Error(`node_modules does not satisfy package.json:\n${statusErrors.join('\n')}`)
+}
+
+const exactErrors = satisfaction.checkExact()
+if (exactErrors.length) {
+  throw new Error(`Dependencies are not exact versions:\n${exactErrors.join('\n')}`)
 }
 ```
 
 Likely use in Grunt:
 ```js
-grunt.registerTask('verify-npm', function() {
-  var satisfaction = require('satisfaction')
+grunt.registerTask('verify-npm', () => {
+  const satisfaction = require('satisfaction')
 
-  var satisfied = satisfaction.status()
-  if (!satisfied) {
-    console.log('node_modules is behind package.json:\n')
-    console.log(satisfaction.violations().join('\n'))
-    grunt.task.run('npm-install')
+  const statusErrors = satisfaction.checkStatus()
+  if (statusErrors.length) {
+    grunt.fail.warn(`node_modules does not satisfy package.json:\n${statusErrors.join('\n')}`)
+  }
+
+  const exactErrors = satisfaction.checkExact()
+  if (exactErrors.length) {
+    grunt.fail.warn(`Dependencies are not exact versions:\n${exactErrors.join('\n')}`)
   }
 })
 ```
 
-Both `satisfaction.status` and `satisfaction.violations` accept an options object:
+Both `statusErrors` and `exactErrors` accept an options object:
 ```js
-var satisfaction = require('satisfaction')
-
-var options = {
-  dir: someDir, // containing folder of package.json and node_modules, defaults to process.cwd()
-  verbose: true // defaults to false, prints output for every dependency checked
-}
-
-console.log(satisfaction.status(options))
+console.log(require('satisfaction').statusErrors({
+  dir: someDir // containing folder of package.json and node_modules, defaults to process.cwd()
+}).join('\n'))
 ```
 
-### As a global
+#### As a global
 
-The `satisfaction` global binary will throw an error when the current directory's `node_modules` does not satisfy the `package.json`.
+The `satisfaction-status` and `satisfaction-exact` global binaries will throw errors listing which violations were found.
 
-Running `satisfaction || npm i` will be prevent `npm i` from running when everything is already installed with compliant versions.
+Running `satisfaction-status || npm i` will be prevent `npm i` from running when everything is already installed with compliant versions.
+
+Example errors for running `satisfaction-status`:
+```bash
+Error: node_modules does not satisfy package.json:
+package eslint installed with 3.6.1 but required 3.6.2
+package ava is not installed
+```
+
+Example errors for running `satisfaction-exact`:
+```bash
+Error: Dependencies are not exact versions:
+package lodash is required with a non-exact version ^4.16.2
+```
 
 
 * * *
 ### Notes / Caveats
-* When using git urls in dependencies, (like `"byRepo": "git+ssh://git@example.com:repo.git#3.5.3"` or like `"byRepo": "githubuser/githubrepo#3.5.3"`), it must be done with a tag (`3.5.3` or `v3.5.3`) that corresponds to the version of said package (`3.5.3`), or it will be considered a violation.
+* When using git urls in dependencies, (like `"byRepo": "git+ssh://git@example.com:repo.git#3.5.3"` or like `"byRepo": "githubuser/githubrepo#3.5.3"`), it must be done with a tag (`3.5.3` or `v3.5.3`) that corresponds to the version of said package (`3.5.3`), or it will be considered an error.
 * Checks the `"dependencies"` and `"devDependencies"` fields of `package.json`.
-* Does not verify that you don't have node_modules that are not in package.json.
+
 
 * * *
 ### Feedback

@@ -38,7 +38,9 @@
   "engine-strict": true,
   "main": "main.js",
   "bin": {
-    "satisfaction": "bin.js"
+    "satisfaction": "satisfaction-status.js",
+    "satisfaction-status": "satisfaction-status.js",
+    "satisfaction-exact": "satisfaction-exact.js"
   },
   "scripts": {
     "lint": "eslint .",
@@ -47,13 +49,14 @@
     "start": "npm test"
   },
   "dependencies": {
+    "lodash": "4.16.2",
     "semver": "5.3.0"
   },
   "devDependencies": {
-    "eslint": "3.3.1",
-    "eslint-config-standard": "5.3.5",
+    "eslint": "3.6.1",
+    "eslint-config-standard": "6.2.0",
     "eslint-plugin-promise": "2.0.1",
-    "eslint-plugin-standard": "2.0.0",
+    "eslint-plugin-standard": "2.0.1",
     "faucet": "0.0.1",
     "tape": "4.6.0"
   }

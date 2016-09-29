@@ -1,26 +1,23 @@
 'use strict'
 
-var semver = require('semver')
-var path = require('path')
+const semver = require('semver')
+const path = require('path')
+const _ = require('lodash')
 
-var DEFAULTS = {
+const errorNotInstalled = dep => `package ${dep} is not installed`
+const errorMisMatch = (dep, cur, req) => `package ${dep} installed with ${cur} but required ${req}`
+const errorNonExact = (dep, req) => `package ${dep} is required with a non-exact version ${req}`
+
+const clean = ver => ver.replace(/^.*#/, '')
+const exactVersion = ver => /^v?\d+\.\d+\.\d+$/.test(ver)
+
+const defaults = ops => Object.assign({
   dir: process.cwd(),
   packageJsonName: 'package.json', // for testing
-  nodeModulesName: 'node_modules', // for testing
-  verbose: false
-}
+  nodeModulesName: 'node_modules' // for testing
+}, ops)
 
-function mixin(target, source) {
-  source = source || {}
-  for (var key in source) {
-    if (source.hasOwnProperty(key) && !target.hasOwnProperty(key)) {
-      target[key] = source[key]
-    }
-  }
-  return target
-}
-
-function getJson(jsonPath) {
+const getJson = jsonPath => {
   try {
     return require(jsonPath)
   } catch (e) {
@@ -28,62 +25,40 @@ function getJson(jsonPath) {
   }
 }
 
-function violations(options) {
-  var optionsKey = JSON.stringify(options)
-
-  if (violations.list && violations.list[optionsKey]) {
-    return violations.list[optionsKey]
-  }
-
-  options = mixin(options || {}, DEFAULTS)
-  var packageJsonPath = path.join(options.dir, options.packageJsonName)
-  var nodeModulesPath = path.join(options.dir, options.nodeModulesName)
-
-  function log() {
-    if (options.verbose) {
-      console.log.apply(console, Array.prototype.slice.apply(arguments))
-    }
-  }
-
-  function getInstalledPackageVersion(pkg) {
-    var pkgJson = getJson(path.join(nodeModulesPath, pkg, options.packageJsonName))
-    return pkgJson && pkgJson.version
-  }
-
-  function getViolationsInDependenciesObject(obj) {
-    obj = obj || {}
-    return Object.keys(obj).map(function(dep) {
-      var neededVersion = obj[dep].replace(/^.*#/, '') // gets the tag if using non-npm git repo
-      var currentVersion = getInstalledPackageVersion(dep)
-
-      log(dep + ' requires ' + neededVersion + ', has ' + currentVersion)
-      if (!currentVersion) {
-        return 'package ' + dep + ' is not installed'
-      }
-      if (!semver.satisfies(currentVersion, neededVersion)) {
-        return 'package ' + dep + ' installed with ' + currentVersion + ' but required ' + neededVersion
-      }
-    }).filter(Boolean)
-  }
-
-  var packageJson = getJson(packageJsonPath)
+const getPackageJson = packageJsonPath => {
+  const packageJson = getJson(packageJsonPath)
   if (!packageJson) {
-    throw new Error('package.json is not at ' + packageJsonPath + ' (or invalid json)')
+    throw new Error(`package.json is not at ${packageJsonPath} (or invalid json)`)
   }
-
-  var dependenciesObjects = [packageJson.dependencies, packageJson.devDependencies]
-
-  var result = [].concat.apply([], dependenciesObjects.map(getViolationsInDependenciesObject))
-  violations.list = violations.list || []
-  violations.list[optionsKey] = result
-
-  return result
+  return packageJson
 }
 
-function status(options) {
-  return violations(options).length === 0
+const getDepsObjs = ops => {
+  const pkgJsonPath = path.join(ops.dir, ops.packageJsonName)
+  const pkg = getPackageJson(pkgJsonPath)
+  return ['dependencies', 'devDependencies'].map(k => pkg[k])
 }
+
+const getErrors = (ops, cb) => _.flatten(getDepsObjs(ops).map(cb)).filter(Boolean)
+
 module.exports = {
-  status: status,
-  violations: violations
+  checkStatus(options) {
+    const ops = defaults(options)
+
+    return getErrors(ops, obj => _.map(obj, (ver, dep) => {
+      const pkgJson = getJson(path.join(ops.dir, ops.nodeModulesName, dep, ops.packageJsonName))
+      const cur = pkgJson && pkgJson.version
+      if (!cur) return errorNotInstalled(dep)
+      const req = clean(ver)
+      if (!semver.satisfies(cur, req)) return errorMisMatch(dep, cur, req)
+    }))
+  },
+  checkExact(options) {
+    const ops = defaults(options)
+
+    return getErrors(ops, obj => _.map(obj, (ver, dep) => {
+      const req = clean(ver)
+      if (!exactVersion(req)) return errorNonExact(dep, req)
+    }))
+  }
 }
