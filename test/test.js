@@ -1,9 +1,9 @@
 'use strict'
 
-var fs = require('fs')
-var test = require('tape')
-var path = require('path')
-var satisfaction = require('../main.js')
+const fs = require('fs')
+const test = require('tape')
+const path = require('path')
+const satisfaction = require('../main.js')
 
 function statusForDir(dir) {
   return satisfaction.status({
@@ -21,16 +21,16 @@ function exactForDir(dir) {
   })
 }
 
-test('this package', function(t) {
+test('this package', t => {
   t.ok(satisfaction.status())
   t.ok(satisfaction.exact())
   t.end()
 })
 
-var tests = fs.readdirSync('test').filter(function(f) { return /^[pf][pf]_/.test(f) })
+const tests = fs.readdirSync('test').filter(f => /^[pf][pf]_/.test(f))
 
-tests.forEach(function(dir) {
-  test(dir, function(t) {
+tests.forEach(dir => {
+  test(dir, t => {
     t.equals(statusForDir(dir), /^p./.test(dir))
     t.equals(exactForDir(dir), /^.p/.test(dir))
     t.end()

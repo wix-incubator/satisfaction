@@ -1,10 +1,10 @@
 'use strict'
 
-var semver = require('semver')
-var path = require('path')
-var _ = require('lodash')
+const semver = require('semver')
+const path = require('path')
+const _ = require('lodash')
 
-var DEFAULTS = {
+const DEFAULTS = {
   dir: process.cwd(),
   packageJsonName: 'package.json', // for testing
   nodeModulesName: 'node_modules', // for testing
@@ -21,8 +21,8 @@ function getJson(jsonPath) {
 
 function _violations(options) {
   options = Object.assign({}, DEFAULTS, options)
-  var packageJsonPath = path.join(options.dir, options.packageJsonName)
-  var nodeModulesPath = path.join(options.dir, options.nodeModulesName)
+  const packageJsonPath = path.join(options.dir, options.packageJsonName)
+  const nodeModulesPath = path.join(options.dir, options.nodeModulesName)
 
   function log() {
     if (options.verbose) {
@@ -31,39 +31,39 @@ function _violations(options) {
   }
 
   function getInstalledPackageVersion(pkg) {
-    var pkgJson = getJson(path.join(nodeModulesPath, pkg, options.packageJsonName))
+    const pkgJson = getJson(path.join(nodeModulesPath, pkg, options.packageJsonName))
     return pkgJson && pkgJson.version
   }
 
   function getViolationsInDependenciesObject(obj) {
     obj = obj || {}
-    return Object.keys(obj).map(function(dep) {
-      var neededVersion = obj[dep].replace(/^.*#/, '') // gets the tag if using non-npm git repo
-      var currentVersion = getInstalledPackageVersion(dep)
+    return Object.keys(obj).map(dep => {
+      const neededVersion = obj[dep].replace(/^.*#/, '') // gets the tag if using non-npm git repo
+      const currentVersion = getInstalledPackageVersion(dep)
 
-      log(dep + ' requires ' + neededVersion + ', has ' + currentVersion)
+      log(`${dep} requires ${neededVersion}, has ${currentVersion}`)
       if (!currentVersion) {
-        return 'package ' + dep + ' is not installed'
+        return `package ${dep} is not installed`
       }
       if (!semver.satisfies(currentVersion, neededVersion)) {
-        return 'package ' + dep + ' installed with ' + currentVersion + ' but required ' + neededVersion
+        return `package ${dep} installed with ${currentVersion} but required ${neededVersion}`
       }
     }).filter(Boolean)
   }
 
-  var packageJson = getJson(packageJsonPath)
+  const packageJson = getJson(packageJsonPath)
   if (!packageJson) {
-    throw new Error('package.json is not at ' + packageJsonPath + ' (or invalid json)')
+    throw new Error(`package.json is not at ${packageJsonPath} (or invalid json)`)
   }
 
-  var dependenciesObjects = [packageJson.dependencies, packageJson.devDependencies]
+  const dependenciesObjects = [packageJson.dependencies, packageJson.devDependencies]
 
-  var result = [].concat.apply([], dependenciesObjects.map(getViolationsInDependenciesObject))
+  const result = [].concat.apply([], dependenciesObjects.map(getViolationsInDependenciesObject))
 
   return result
 }
 
-var violations = _.memoize(_violations, JSON.stringify)
+const violations = _.memoize(_violations, JSON.stringify)
 
 function status(options) {
   return violations(options).length === 0
@@ -71,39 +71,39 @@ function status(options) {
 
 function _exactViolations(options) {
   options = Object.assign({}, DEFAULTS, options)
-  var packageJsonPath = path.join(options.dir, options.packageJsonName)
+  const packageJsonPath = path.join(options.dir, options.packageJsonName)
 
   function getViolationsInDependenciesObject(obj) {
     obj = obj || {}
-    return Object.keys(obj).map(function(dep) {
-      var version = obj[dep].replace(/^.*#/, '') // gets the tag if using non-npm git repo
+    return Object.keys(obj).map(dep => {
+      const version = obj[dep].replace(/^.*#/, '') // gets the tag if using non-npm git repo
       if (!/^v?\d+\.\d+\.\d+$/.test(version)) {
-        return 'package ' + dep + ' installed with non-exact version ' + version
+        return `package ${dep} installed with non-exact version ${version}`
       }
     }).filter(Boolean)
   }
 
-  var packageJson = getJson(packageJsonPath)
+  const packageJson = getJson(packageJsonPath)
   if (!packageJson) {
-    throw new Error('package.json is not at ' + packageJsonPath + ' (or invalid json)')
+    throw new Error(`package.json is not at ${packageJsonPath} (or invalid json)`)
   }
 
-  var dependenciesObjects = [packageJson.dependencies, packageJson.devDependencies]
+  const dependenciesObjects = [packageJson.dependencies, packageJson.devDependencies]
 
-  var result = [].concat.apply([], dependenciesObjects.map(getViolationsInDependenciesObject))
+  const result = [].concat.apply([], dependenciesObjects.map(getViolationsInDependenciesObject))
 
   return result
 }
 
-var exactViolations = _.memoize(_exactViolations, JSON.stringify)
+const exactViolations = _.memoize(_exactViolations, JSON.stringify)
 
 function exact(options) {
   return exactViolations(options).length === 0
 }
 
 module.exports = {
-  status: status,
-  violations: violations,
-  exact: exact,
-  exactViolations: exactViolations
+  status,
+  violations,
+  exact,
+  exactViolations
 }

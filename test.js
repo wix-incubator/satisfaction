@@ -1,10 +1,10 @@
 'use strict'
 
-var satisfaction = require('./main.js')
+const satisfaction = require('./main.js')
 
-var options = {verbose: true}
+const options = {verbose: true}
 
-var status = satisfaction.status(options)
+const status = satisfaction.status(options)
 
 console.log(status)
 

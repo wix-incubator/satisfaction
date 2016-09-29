@@ -2,12 +2,12 @@
 
 'use strict'
 
-var satisfaction = require('.')
+const satisfaction = require('.')
 
-var ops = {
+const ops = {
   dir: process.cwd()
 }
 
 if (!satisfaction.status(ops)) {
-  throw new Error('node_modules does not satisfy package.json:\n' + satisfaction.violations(ops).join('\n') + '\n')
+  throw new Error(`node_modules does not satisfy package.json:\n${satisfaction.violations(ops).join('\n')}\n`)
 }
