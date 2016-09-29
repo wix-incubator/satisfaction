@@ -54,8 +54,7 @@ Both `satisfaction.status` and `satisfaction.violations` accept an options objec
 var satisfaction = require('satisfaction')
 
 var options = {
-  dir: someDir, // containing folder of package.json and node_modules, defaults to process.cwd()
-  verbose: true // defaults to false, prints output for every dependency checked
+  dir: someDir // containing folder of package.json and node_modules, defaults to process.cwd()
 }
 
 console.log(satisfaction.status(options))

@@ -2,12 +2,12 @@
 
 const satisfaction = require('./main.js')
 
-const options = {verbose: true}
+const options = {}
 
 const status = satisfaction.status(options)
 
 console.log(status)
 
 if (!status) {
-  console.log(satisfaction.violations({verbose: true}))
+  console.log(satisfaction.violations({}))
 }

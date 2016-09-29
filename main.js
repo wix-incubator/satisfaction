@@ -7,8 +7,7 @@ const _ = require('lodash')
 const DEFAULTS = {
   dir: process.cwd(),
   packageJsonName: 'package.json', // for testing
-  nodeModulesName: 'node_modules', // for testing
-  verbose: false
+  nodeModulesName: 'node_modules' // for testing
 }
 
 function getJson(jsonPath) {
@@ -24,12 +23,6 @@ function _violations(options) {
   const packageJsonPath = path.join(options.dir, options.packageJsonName)
   const nodeModulesPath = path.join(options.dir, options.nodeModulesName)
 
-  function log() {
-    if (options.verbose) {
-      console.log.apply(console, Array.prototype.slice.apply(arguments))
-    }
-  }
-
   function getInstalledPackageVersion(pkg) {
     const pkgJson = getJson(path.join(nodeModulesPath, pkg, options.packageJsonName))
     return pkgJson && pkgJson.version
@@ -41,7 +34,6 @@ function _violations(options) {
       const neededVersion = obj[dep].replace(/^.*#/, '') // gets the tag if using non-npm git repo
       const currentVersion = getInstalledPackageVersion(dep)
 
-      log(`${dep} requires ${neededVersion}, has ${currentVersion}`)
       if (!currentVersion) {
         return `package ${dep} is not installed`
       }
