@@ -2,6 +2,7 @@
 
 var semver = require('semver')
 var path = require('path')
+var _ = require('lodash')
 
 var DEFAULTS = {
   dir: process.cwd(),
@@ -18,13 +19,7 @@ function getJson(jsonPath) {
   }
 }
 
-function violations(options) {
-  var optionsKey = JSON.stringify(options)
-
-  if (violations.list && violations.list[optionsKey]) {
-    return violations.list[optionsKey]
-  }
-
+function _violations(options) {
   options = Object.assign({}, DEFAULTS, options)
   var packageJsonPath = path.join(options.dir, options.packageJsonName)
   var nodeModulesPath = path.join(options.dir, options.nodeModulesName)
@@ -64,23 +59,17 @@ function violations(options) {
   var dependenciesObjects = [packageJson.dependencies, packageJson.devDependencies]
 
   var result = [].concat.apply([], dependenciesObjects.map(getViolationsInDependenciesObject))
-  violations.list = violations.list || []
-  violations.list[optionsKey] = result
 
   return result
 }
+
+var violations = _.memoize(_violations, JSON.stringify)
 
 function status(options) {
   return violations(options).length === 0
 }
 
-function exactViolations(options) {
-  var optionsKey = JSON.stringify(options)
-
-  if (exactViolations.list && exactViolations.list[optionsKey]) {
-    return exactViolations.list[optionsKey]
-  }
-
+function _exactViolations(options) {
   options = Object.assign({}, DEFAULTS, options)
   var packageJsonPath = path.join(options.dir, options.packageJsonName)
 
@@ -102,11 +91,11 @@ function exactViolations(options) {
   var dependenciesObjects = [packageJson.dependencies, packageJson.devDependencies]
 
   var result = [].concat.apply([], dependenciesObjects.map(getViolationsInDependenciesObject))
-  exactViolations.list = exactViolations.list || []
-  exactViolations.list[optionsKey] = result
 
   return result
 }
+
+var exactViolations = _.memoize(_exactViolations, JSON.stringify)
 
 function exact(options) {
   return exactViolations(options).length === 0
