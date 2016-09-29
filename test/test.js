@@ -13,16 +13,26 @@ function statusForDir(dir) {
   })
 }
 
+function exactForDir(dir) {
+  return satisfaction.exact({
+    packageJsonName: 'pkg.json',
+    nodeModulesName: 'n_m',
+    dir: path.join(process.cwd(), 'test', dir)
+  })
+}
+
 test('this package', function(t) {
   t.ok(satisfaction.status())
+  t.ok(satisfaction.exact())
   t.end()
 })
 
-var tests = fs.readdirSync('test').filter(function(f) { return ~f.indexOf('_') })
+var tests = fs.readdirSync('test').filter(function(f) { return /^[pf][pf]_/.test(f) })
 
 tests.forEach(function(dir) {
   test(dir, function(t) {
-    t.equals(statusForDir(dir), dir.indexOf('passing') === 0)
+    t.equals(statusForDir(dir), /^p./.test(dir))
+    t.equals(exactForDir(dir), /^.p/.test(dir))
     t.end()
   })
 })

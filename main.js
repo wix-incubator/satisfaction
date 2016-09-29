@@ -83,7 +83,48 @@ function violations(options) {
 function status(options) {
   return violations(options).length === 0
 }
+
+function exactViolations(options) {
+  var optionsKey = JSON.stringify(options)
+
+  if (exactViolations.list && exactViolations.list[optionsKey]) {
+    return exactViolations.list[optionsKey]
+  }
+
+  options = mixin(options || {}, DEFAULTS)
+  var packageJsonPath = path.join(options.dir, options.packageJsonName)
+
+  function getViolationsInDependenciesObject(obj) {
+    obj = obj || {}
+    return Object.keys(obj).map(function(dep) {
+      var version = obj[dep].replace(/^.*#/, '') // gets the tag if using non-npm git repo
+      if (!/^v?\d+\.\d+\.\d+$/.test(version)) {
+        return 'package ' + dep + ' installed with non-exact version ' + version
+      }
+    }).filter(Boolean)
+  }
+
+  var packageJson = getJson(packageJsonPath)
+  if (!packageJson) {
+    throw new Error('package.json is not at ' + packageJsonPath + ' (or invalid json)')
+  }
+
+  var dependenciesObjects = [packageJson.dependencies, packageJson.devDependencies]
+
+  var result = [].concat.apply([], dependenciesObjects.map(getViolationsInDependenciesObject))
+  exactViolations.list = exactViolations.list || []
+  exactViolations.list[optionsKey] = result
+
+  return result
+}
+
+function exact(options) {
+  return exactViolations(options).length === 0
+}
+
 module.exports = {
   status: status,
-  violations: violations
+  violations: violations,
+  exact: exact,
+  exactViolations: exactViolations
 }
