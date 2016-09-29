@@ -10,16 +10,6 @@ var DEFAULTS = {
   verbose: false
 }
 
-function mixin(target, source) {
-  source = source || {}
-  for (var key in source) {
-    if (source.hasOwnProperty(key) && !target.hasOwnProperty(key)) {
-      target[key] = source[key]
-    }
-  }
-  return target
-}
-
 function getJson(jsonPath) {
   try {
     return require(jsonPath)
@@ -35,7 +25,7 @@ function violations(options) {
     return violations.list[optionsKey]
   }
 
-  options = mixin(options || {}, DEFAULTS)
+  options = Object.assign({}, DEFAULTS, options)
   var packageJsonPath = path.join(options.dir, options.packageJsonName)
   var nodeModulesPath = path.join(options.dir, options.nodeModulesName)
 
@@ -91,7 +81,7 @@ function exactViolations(options) {
     return exactViolations.list[optionsKey]
   }
 
-  options = mixin(options || {}, DEFAULTS)
+  options = Object.assign({}, DEFAULTS, options)
   var packageJsonPath = path.join(options.dir, options.packageJsonName)
 
   function getViolationsInDependenciesObject(obj) {
