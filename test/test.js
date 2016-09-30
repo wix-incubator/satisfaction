@@ -1,28 +1,24 @@
 'use strict'
 
-var fs = require('fs')
-var test = require('tape')
-var path = require('path')
-var satisfaction = require('../main.js')
+const _ = require('lodash')
+const test = require('tape')
+const satisfaction = require('../main.js')
 
-function statusForDir(dir) {
-  return satisfaction.status({
-    packageJsonName: 'pkg.json',
-    nodeModulesName: 'n_m',
-    dir: path.join(process.cwd(), 'test', dir)
-  })
-}
-
-test('this package', function(t) {
-  t.ok(satisfaction.status())
+test('this package', t => {
+  t.deepEqual(satisfaction.checkStatus(), [])
+  t.deepEqual(satisfaction.checkExact(), [])
   t.end()
 })
 
-var tests = fs.readdirSync('test').filter(function(f) { return ~f.indexOf('_') })
-
-tests.forEach(function(dir) {
-  test(dir, function(t) {
-    t.equals(statusForDir(dir), dir.indexOf('passing') === 0)
+_.forEach(require('./testCases.json'), (testCase, dir) => {
+  const ops = {
+    packageJsonName: 'pkg.json',
+    nodeModulesName: 'n_m',
+    dir: require('path').join(process.cwd(), 'test', dir)
+  }
+  test(dir, t => {
+    t.deepEquals(satisfaction.checkStatus(ops), testCase.errorsOnStatus)
+    t.deepEquals(satisfaction.checkExact(ops), testCase.errorsOnExact)
     t.end()
   })
 })
