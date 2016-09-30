@@ -8,6 +8,7 @@ const ops = {
   dir: process.cwd()
 }
 
-if (!satisfaction.exact(ops)) {
-  throw new Error(`Dependencies are not exact versions:\n${satisfaction.exactViolations(ops).join('\n')}\n`)
+const violations = satisfaction.exactViolations(ops)
+if (violations.length) {
+  throw new Error(`Dependencies are not exact versions:\n${violations.join('\n')}\n`)
 }

@@ -10,12 +10,12 @@ const getTestingOptions = dir => ({
   dir: require('path').join(process.cwd(), 'test', dir)
 })
 
-const statusForDir = dir => satisfaction.status(getTestingOptions(dir))
-const exactForDir = dir => satisfaction.exact(getTestingOptions(dir))
+const statusForDir = dir => satisfaction.statusViolations(getTestingOptions(dir))
+const exactForDir = dir => satisfaction.exactViolations(getTestingOptions(dir))
 
 test('this package', t => {
-  t.ok(satisfaction.status())
-  t.ok(satisfaction.exact())
+  t.equal(satisfaction.statusViolations().length, 0)
+  t.equal(satisfaction.exactViolations().length, 0)
   t.end()
 })
 
@@ -24,8 +24,8 @@ fs
   .filter(f => /^[pf][pf]_/.test(f))
   .forEach(dir => {
     test(dir, t => {
-      t.equals(statusForDir(dir), /^p./.test(dir))
-      t.equals(exactForDir(dir), /^.p/.test(dir))
+      t.equals(statusForDir(dir).length === 0, /^p./.test(dir))
+      t.equals(exactForDir(dir).length === 0, /^.p/.test(dir))
       t.end()
     })
   })

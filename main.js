@@ -6,7 +6,7 @@ const _ = require('lodash')
 
 const errorNotInstalled = dep => `package ${dep} is not installed`
 const errorMisMatch = (dep, cur, req) => `package ${dep} installed with ${cur} but required ${req}`
-const errorNonExact = (dep, req) => `package ${dep} installed with non-exact version ${req}` // should be 'required'
+const errorNonExact = (dep, req) => `package ${dep} is required with a non-exact version ${req}`
 
 const clean = ver => ver.replace(/^.*#/, '')
 const exactVersion = ver => /^v?\d+\.\d+\.\d+$/.test(ver)
@@ -43,7 +43,7 @@ const getErrors = (ops, cb) => _.flatten(getDepsObjs(ops).map(cb)).filter(Boolea
 
 //
 
-const _statusViolations = options => {
+const statusViolations = options => {
   const ops = defaults(options)
 
   return getErrors(ops, obj => _.map(obj, (ver, dep) => {
@@ -55,7 +55,7 @@ const _statusViolations = options => {
   }))
 }
 
-const _exactViolations = options => {
+const exactViolations = options => {
   const ops = defaults(options)
 
   return getErrors(ops, obj => _.map(obj, (ver, dep) => {
@@ -64,12 +64,4 @@ const _exactViolations = options => {
   }))
 }
 
-//
-
-const statusViolations = _.memoize(_statusViolations, JSON.stringify)
-const exactViolations = _.memoize(_exactViolations, JSON.stringify)
-
-const status = options => statusViolations(options).length === 0
-const exact = options => exactViolations(options).length === 0
-
-module.exports = { status, statusViolations, exact, exactViolations }
+module.exports = { statusViolations, exactViolations }
