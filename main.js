@@ -43,7 +43,7 @@ const getErrors = (ops, cb) => _.flatten(getDepsObjs(ops).map(cb)).filter(Boolea
 
 //
 
-const _violations = options => {
+const _statusViolations = options => {
   const ops = defaults(options)
 
   return getErrors(ops, obj => _.map(obj, (ver, dep) => {
@@ -66,10 +66,10 @@ const _exactViolations = options => {
 
 //
 
-const violations = _.memoize(_violations, JSON.stringify)
+const statusViolations = _.memoize(_statusViolations, JSON.stringify)
 const exactViolations = _.memoize(_exactViolations, JSON.stringify)
 
-const status = options => violations(options).length === 0
+const status = options => statusViolations(options).length === 0
 const exact = options => exactViolations(options).length === 0
 
-module.exports = { status, violations, exact, exactViolations }
+module.exports = { status, statusViolations, exact, exactViolations }
