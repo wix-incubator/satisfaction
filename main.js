@@ -41,27 +41,24 @@ const getDepsObjs = ops => {
 
 const getErrors = (ops, cb) => _.flatten(getDepsObjs(ops).map(cb)).filter(Boolean)
 
-//
+module.exports = {
+  checkStatus(options) {
+    const ops = defaults(options)
 
-const statusViolations = options => {
-  const ops = defaults(options)
+    return getErrors(ops, obj => _.map(obj, (ver, dep) => {
+      const pkgJson = getJson(path.join(ops.dir, ops.nodeModulesName, dep, ops.packageJsonName))
+      const cur = pkgJson && pkgJson.version
+      if (!cur) return errorNotInstalled(dep)
+      const req = clean(ver)
+      if (!semver.satisfies(cur, req)) return errorMisMatch(dep, cur, req)
+    }))
+  },
+  checkExact(options) {
+    const ops = defaults(options)
 
-  return getErrors(ops, obj => _.map(obj, (ver, dep) => {
-    const pkgJson = getJson(path.join(ops.dir, ops.nodeModulesName, dep, ops.packageJsonName))
-    const cur = pkgJson && pkgJson.version
-    if (!cur) return errorNotInstalled(dep)
-    const req = clean(ver)
-    if (!semver.satisfies(cur, req)) return errorMisMatch(dep, cur, req)
-  }))
+    return getErrors(ops, obj => _.map(obj, (ver, dep) => {
+      const req = clean(ver)
+      if (!exactVersion(req)) return errorNonExact(dep, req)
+    }))
+  }
 }
-
-const exactViolations = options => {
-  const ops = defaults(options)
-
-  return getErrors(ops, obj => _.map(obj, (ver, dep) => {
-    const req = clean(ver)
-    if (!exactVersion(req)) return errorNonExact(dep, req)
-  }))
-}
-
-module.exports = { statusViolations, exactViolations }

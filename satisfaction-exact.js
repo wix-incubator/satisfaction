@@ -2,13 +2,8 @@
 
 'use strict'
 
-const satisfaction = require('.')
+const errors = require('.').checkExact({ dir: process.cwd() })
 
-const ops = {
-  dir: process.cwd()
-}
-
-const violations = satisfaction.exactViolations(ops)
-if (violations.length) {
-  throw new Error(`Dependencies are not exact versions:\n${violations.join('\n')}\n`)
+if (errors.length) {
+  throw new Error(`Dependencies are not exact versions:\n${errors.join('\n')}\n`)
 }

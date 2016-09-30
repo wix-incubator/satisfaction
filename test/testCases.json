@@ -1,0 +1,50 @@
+{
+  "git_url_without_semver_tag": {
+    "errorsOnStatus": ["package a installed with 1.0.0 but required git+ssh://git@example.com:repo.git"],
+    "errorsOnExact": ["package a is required with a non-exact version git+ssh://git@example.com:repo.git"]
+  },
+  "github_url_without_semver_tag": {
+    "errorsOnStatus": ["package a installed with 1.0.0 but required user/repo"],
+    "errorsOnExact": ["package a is required with a non-exact version user/repo"]
+  },
+  "missing_dep": {
+    "errorsOnStatus": ["package a is not installed"],
+    "errorsOnExact": []
+  },
+  "missing_dev_dep": {
+    "errorsOnStatus": ["package a is not installed"],
+    "errorsOnExact": []
+  },
+  "missing_git_url_dep": {
+    "errorsOnStatus": ["package a is not installed"],
+    "errorsOnExact": []
+  },
+  "missing_github_url_dep": {
+    "errorsOnStatus": ["package a is not installed"],
+    "errorsOnExact": []
+  },
+  "old_dep": {
+    "errorsOnStatus": ["package a installed with 0.9.0 but required 1.0.0"],
+    "errorsOnExact": []
+  },
+  "old_git_url_dep": {
+    "errorsOnStatus": ["package a installed with 0.1.0 but required 1.0.0"],
+    "errorsOnExact": []
+  },
+  "old_github_url_dep": {
+    "errorsOnStatus": ["package a is not installed"],
+    "errorsOnExact": []
+  },
+  "acceptably_higher_versions": {
+    "errorsOnStatus": [],
+    "errorsOnExact": ["package a is required with a non-exact version ~1.0.0", "package b is required with a non-exact version ^1.0.0"]
+  },
+  "exact_versions": {
+    "errorsOnStatus": [],
+    "errorsOnExact": []
+  },
+  "git_and_github_urls": {
+    "errorsOnStatus": [],
+    "errorsOnExact": []
+  }
+}
