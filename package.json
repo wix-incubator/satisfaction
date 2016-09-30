@@ -42,7 +42,7 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "tape": "./node_modules/.bin/tape 'test/**/*.js'",
+    "tape": "node test/test.js | faucet",
     "test": "npm run lint && npm run tape",
     "start": "npm test"
   },
