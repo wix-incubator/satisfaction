@@ -1,6 +1,6 @@
 {
   "name": "satisfaction",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Verifies that a node_modules dir satisfies a package.json file",
   "keywords": [
     "npm",
