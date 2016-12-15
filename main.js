@@ -49,6 +49,7 @@ module.exports = {
       const pkgJson = getJson(path.join(ops.dir, ops.nodeModulesName, dep, ops.packageJsonName))
       const cur = pkgJson && pkgJson.version
       if (!cur) return errorNotInstalled(dep)
+      if (ops.allowSymlinks && require('fs').lstatSync(path.join(ops.dir, ops.nodeModulesName, dep)).isSymbolicLink()) return
       const req = clean(ver)
       if (!semver.satisfies(cur, req)) return errorMisMatch(dep, cur, req)
     }))
