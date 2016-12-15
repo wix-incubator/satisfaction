@@ -11,11 +11,11 @@ test('this package', t => {
 })
 
 _.forEach(require('./testCases.json'), (testCase, dir) => {
-  const ops = {
+  const ops = Object.assign({
     packageJsonName: 'pkg.json',
     nodeModulesName: 'n_m',
     dir: require('path').join(process.cwd(), 'test', dir)
-  }
+  }, testCase.ops || {})
   test(dir, t => {
     t.deepEquals(satisfaction.checkStatus(ops), testCase.errorsOnStatus)
     t.deepEquals(satisfaction.checkExact(ops), testCase.errorsOnExact)

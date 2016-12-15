@@ -27,6 +27,15 @@
     "errorsOnStatus": ["package a installed with 0.9.0 but required 1.0.0"],
     "errorsOnExact": []
   },
+  "old_dep_symlink": {
+    "errorsOnStatus": ["package a installed with 0.9.0 but required 1.0.0"],
+    "errorsOnExact": []
+  },
+  "old_dep_symlink_ignored": {
+    "ops": { "allowSymlinks": true },
+    "errorsOnStatus": [],
+    "errorsOnExact": []
+  },
   "old_git_url_dep": {
     "errorsOnStatus": ["package a installed with 0.1.0 but required 1.0.0"],
     "errorsOnExact": []
