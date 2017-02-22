@@ -52,6 +52,10 @@
     "errorsOnStatus": [],
     "errorsOnExact": []
   },
+  "non_exact_versions": {
+    "errorsOnStatus": [],
+    "errorsOnExact": ["package a is required with a non-exact version ^1.0.0", "package b is required with a non-exact version *"]
+  },
   "git_and_github_urls": {
     "errorsOnStatus": [],
     "errorsOnExact": []
