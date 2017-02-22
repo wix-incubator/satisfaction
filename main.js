@@ -59,6 +59,7 @@ module.exports = {
 
     return getErrors(ops, obj => _.map(obj, (ver, dep) => {
       const req = clean(ver)
+      if (ops.allowAny && ver === '*') return
       if (!exactVersion(req)) return errorNonExact(dep, req)
     }))
   }
