@@ -10,7 +10,7 @@
     "dependencies",
     "satisfaction"
   ],
-  "homepage": "https://github.com/danyshaanan/satisfaction",
+  "homepage": "https://github.com/wix/satisfaction",
   "author": {
     "name": "Dany Shaanan",
     "email": "danyshaanan@gmail.com",
@@ -21,16 +21,15 @@
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/danyshaanan/satisfaction/blob/master/LICENSE"
+      "url": "https://github.com/wix/satisfaction/blob/master/LICENSE"
     }
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/danyshaanan/satisfaction.git"
+    "url": "git://github.com/wix/satisfaction.git"
   },
   "bugs": {
-    "url": "https://github.com/danyshaanan/satisfaction",
-    "email": "danyshaanan@gmail.com"
+    "url": "https://github.com/wix/satisfaction"
   },
   "engines": {
     "node": ">=4.0.0"

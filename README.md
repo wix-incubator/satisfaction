@@ -1,10 +1,10 @@
 # Satisfaction
 
-[![Build Status](https://travis-ci.org/danyshaanan/satisfaction.png)](https://travis-ci.org/danyshaanan/satisfaction)
+[![Build Status](https://travis-ci.org/wix/satisfaction.png)](https://travis-ci.org/wix/satisfaction)
 [![NPM Version](https://img.shields.io/npm/v/satisfaction.svg?style=flat)](https://npmjs.org/package/satisfaction)
 [![License](http://img.shields.io/npm/l/satisfaction.svg?style=flat)](LICENSE)
-[![Dependency Status](https://david-dm.org/danyshaanan/satisfaction.svg)](https://david-dm.org/danyshaanan/satisfaction)
-[![devDependency Status](https://david-dm.org/danyshaanan/satisfaction/dev-status.svg)](https://david-dm.org/danyshaanan/satisfaction#info=devDependencies)
+[![Dependency Status](https://david-dm.org/wix/satisfaction.svg)](https://david-dm.org/wix/satisfaction)
+[![devDependency Status](https://david-dm.org/wix/satisfaction/dev-status.svg)](https://david-dm.org/wix/satisfaction#info=devDependencies)
 
 ### Verifies that a `package.json` file is satisfied by its `node_modules` dir.
 
@@ -99,6 +99,4 @@ package lodash is required with a non-exact version ^4.16.2
 
 * * *
 ### Feedback
-* If you enjoyed this package, please star it [on Github](https://github.com/danyshaanan/satisfaction).
-* You are invited to [Open an issue on Github](https://github.com/danyshaanan/satisfaction/issues).
-* For other matters, my email address can be found on my [NpmJS page](https://www.npmjs.org/~danyshaanan), my [Github page](https://github.com/danyshaanan), or my [website](http://danyshaanan.com/).
+* You are invited to [Open an issue on Github](https://github.com/wix/satisfaction/issues).
